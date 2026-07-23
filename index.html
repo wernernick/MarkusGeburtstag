@@ -3,133 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markus Audit 🍎</title>
+    <title>Markus Performance Audit</title>
     <link rel="stylesheet" href="style.css">
-   
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="script.js" defer></script>
+    
+    <!-- WICHTIG: Supabase CDN muss vor der script.js geladen werden -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-
-    <main class="app-container">
-        <!-- Fortschrittsbalken -->
-        <div class="progress-bar-container">
-            <div class="progress-bar" id="progress-bar"></div>
+    <div class="glass-container">
+        <h1>Markus Audit 2026</h1>
+        
+        <!-- Step 1 -->
+        <div id="step1" class="step">
+            <h2>1. Dimensionen</h2>
+            <p>Wie lautet das exakte Maß?</p>
+            <input type="range" id="laenge_cm" min="1" max="30" value="15">
+            <p><span id="laenge_output">15</span> cm</p>
+            <button class="next-btn" data-next="step2">Weiter</button>
         </div>
 
-        <form id="survey-form">
-
-            <!-- STEP 1: LÄNGE (Der Cartoon-Gag) -->
-            <div class="step active" id="step-1">
-                <h2>Wie lang war er?</h2>
-                <p class="subtitle">Zieh den Regler, um die Wahrheit ans Licht zu bringen.</p>
-                
-                <!-- Platzhalter für dein Cartoon-Bild -->
-                <div class="cartoon-container">
-                    <div class="cartoon-placeholder">
-                        <span>(Dein Cartoon-Markus Bild hier)</span>
-                    </div>
-                    <!-- Der dynamische Zensurbalken -->
-                    <div class="censor-wrapper">
-                        <div class="censor-bar" id="censor-bar"></div>
-                    </div>
-                </div>
-
-                <div class="slider-group">
-                    <input type="range" id="laenge" min="1" max="30" value="15" class="apple-slider">
-                    <div class="dynamic-value"><span id="laenge-text">15</span> cm</div>
-                </div>
-                <button type="button" class="next-btn">Weiter</button>
-            </div>
-
-            <!-- STEP 2: DAUER -->
-            <div class="step" id="step-2">
-                <h2>Wie fandest du es zeitlich?</h2>
-                <div class="slider-group mt-large">
-                    <input type="range" id="dauer" min="0" max="100" value="50" class="apple-slider">
-                    <div id="dauer-text" class="dynamic-value highlight-green">Genau richtig</div>
-                </div>
-                <button type="button" class="next-btn">Weiter</button>
-            </div>
-
-            <!-- STEP 3: AKUSTIK (Kacheln statt Dropdown) -->
-            <div class="step" id="step-3">
-                <h2>Die Geräuschkulisse?</h2>
-                <div class="grid-options">
-                    <label class="option-card"><input type="radio" name="akustik" value="1"><span>🐭 Mucksäuschenstill</span></label>
-                    <label class="option-card"><input type="radio" name="akustik" value="2"><span>🚜 Startender Traktor</span></label>
-                    <label class="option-card"><input type="radio" name="akustik" value="3"><span>🦍 Tarzan im Dschungel</span></label>
-                    <label class="option-card"><input type="radio" name="akustik" value="4"><span>😭 Als würde jemand weinen</span></label>
-                </div>
-                <button type="button" class="next-btn">Weiter</button>
-            </div>
-
-            <!-- STEP 4: FAHRWEISE -->
-            <div class="step" id="step-4">
-                <h2>Wenn es ein Auto wäre...</h2>
-                <p class="subtitle">Wie war die Performance?</p>
-                <div class="star-rating">
-                    <input type="radio" name="performance" id="star5" value="5"><label for="star5">★</label>
-                    <input type="radio" name="performance" id="star4" value="4"><label for="star4">★</label>
-                    <input type="radio" name="performance" id="star3" value="3"><label for="star3">★</label>
-                    <input type="radio" name="performance" id="star2" value="2"><label for="star2">★</label>
-                    <input type="radio" name="performance" id="star1" value="1"><label for="star1">★</label>
-                </div>
-                <div id="star-text" class="dynamic-value">Bitte bewerten...</div>
-                <button type="button" class="next-btn">Weiter</button>
-            </div>
-
-            <!-- STEP 5: VORSPIEL -->
-            <div class="step" id="step-5">
-                <h2>Wie war das Kneten beim Vorspiel?</h2>
-                <div class="slider-group mt-large">
-                    <input type="range" id="vorspiel" min="0" max="100" value="50" class="apple-slider">
-                    <div id="vorspiel-text" class="dynamic-value highlight-green">Perfekte Technik 🥖</div>
-                </div>
-                <button type="button" class="next-btn">Weiter</button>
-            </div>
-
-            <!-- STEP 6: NACHGANG -->
-            <div class="step" id="step-6">
-                <h2>Was passierte direkt danach?</h2>
-                <div class="grid-options">
-                    <label class="option-card"><input type="radio" name="nachgang" value="1"><span>😴 Direkt eingeschlafen</span></label>
-                    <label class="option-card"><input type="radio" name="nachgang" value="2"><span>🙌 Wollte High-Five</span></label>
-                    <label class="option-card"><input type="radio" name="nachgang" value="3"><span>📱 Handy gecheckt</span></label>
-                    <label class="option-card"><input type="radio" name="nachgang" value="4"><span>🤔 "War ich gut?"</span></label>
-                </div>
-                <button type="button" class="next-btn">Weiter</button>
-            </div>
-
-            <!-- STEP 7: WEITEREMPFEHLUNG -->
-            <div class="step" id="step-7">
-                <h2>Würdest du ihn einer Freundin empfehlen?</h2>
-                <div class="decision-group">
-                    <button type="button" class="decision-btn btn-yes" data-value="1">Ja, gönnt euch! ✨</button>
-                    <button type="button" class="decision-btn btn-no" data-value="0">Nein, lass mal. 🛑</button>
-                </div>
-                <input type="hidden" id="empfehlung">
-                
-                <div class="comment-section">
-                    <label for="kommentar">Noch letzte Worte?</label>
-                    <textarea id="kommentar" rows="2" placeholder="Was lief gut, was nicht?"></textarea>
-                </div>
-
-                <button type="submit" id="submit-btn" class="submit-btn">
-                    <span id="btn-text">Bewertung abschicken</span>
-                    <span id="btn-spinner" class="hidden">Wird hochgeladen...</span>
-                </button>
-            </div>
-
-        </form>
-
-        <div id="success-msg" class="step">
-            <div class="success-icon">🎉</div>
-            <h2>Danke für dein Opfer!</h2>
-            <p>Die Daten wurden ins Dashboard geladen. Markus wird (vielleicht) daraus lernen.</p>
+        <!-- Step 2 -->
+        <div id="step2" class="step hidden">
+            <h2>2. Ausdauer</h2>
+            <p>Bewerte die Dauer (1-10):</p>
+            <input type="number" id="dauer_rating" min="1" max="10" value="5">
+            <button class="next-btn" data-next="step3">Weiter</button>
         </div>
-    </main>
 
+        <!-- Step 3 -->
+        <div id="step3" class="step hidden">
+            <h2>3. Akustik</h2>
+            <p>Wähle ein Akustik-Level (1-5):</p>
+            <select id="akustik_id">
+                <option value="1">Mäuschen (1)</option>
+                <option value="3" selected>Normal (3)</option>
+                <option value="5">Presslufthammer (5)</option>
+            </select>
+            <button class="next-btn" data-next="step4">Weiter</button>
+        </div>
+
+        <!-- Step 4 -->
+        <div id="step4" class="step hidden">
+            <h2>4. Performance</h2>
+            <p>Sterne-Rating (1-5):</p>
+            <input type="range" id="performance_sterne" min="1" max="5" value="3">
+            <p><span id="perf_output">3</span> Sterne</p>
+            <button class="next-btn" data-next="step5">Weiter</button>
+        </div>
+
+        <!-- Step 5 -->
+        <div id="step5" class="step hidden">
+            <h2>5. Vorspiel</h2>
+            <p>Rating (1-10):</p>
+            <input type="number" id="vorspiel_rating" min="1" max="10" value="5">
+            <button class="next-btn" data-next="step6">Weiter</button>
+        </div>
+
+        <!-- Step 6 -->
+        <div id="step6" class="step hidden">
+            <h2>6. Nachgang</h2>
+            <p>Level (1-5):</p>
+            <input type="number" id="nachgang_id" min="1" max="5" value="3">
+            <button class="next-btn" data-next="step7">Weiter</button>
+        </div>
+
+        <!-- Step 7 -->
+        <div id="step7" class="step hidden">
+            <h2>7. Fazit</h2>
+            <p>Würdest du Markus weiterempfehlen?</p>
+            <select id="empfehlung">
+                <option value="1">1 - Nein</option>
+                <option value="2">2 - Vielleicht</option>
+                <option value="3" selected>3 - Ja, absolut</option>
+            </select>
+            <br><br>
+            <textarea id="kommentar" placeholder="Abschließende Worte..."></textarea>
+            <br>
+            <button id="submit-btn">Ergebnis abschicken</button>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-msg" class="step hidden">
+            <h2>Danke!</h2>
+            <p>Das Audit für Markus wurde sicher verpackt und an die Datenbank übermittelt.</p>
+        </div>
+    </div>
 </body>
 </html>
