@@ -1,154 +1,54 @@
-/* Grundlegende Einstellungen */
+/* Grundlegende Einstellungen (bleiben gleich) */
 :root {
-    --bg-color: #f8fafc; /* Ganz leichtes Grau für den Hintergrund, damit die weiße Karte wirkt */
+    --bg-color: #f8fafc;
     --card-bg: #ffffff;
     --text-main: #1e293b;
     --text-muted: #64748b;
-    --accent: #6366f1; /* Modernes Indigo */
+    --accent: #6366f1;
     --accent-hover: #4f46e5;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-}
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+.card { background-color: var(--card-bg); max-width: 500px; width: 100%; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); box-sizing: border-box; }
+header { text-align: center; margin-bottom: 30px; }
+header h1 { margin: 0 0 10px 0; font-size: 1.8rem; font-weight: 700; }
+header p { margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+.input-group { margin-bottom: 25px; }
+label { display: block; font-weight: 500; margin-bottom: 8px; font-size: 0.95rem; }
 
-/* Die weiße "Karte" in der Mitte */
-.card {
-    background-color: var(--card-bg);
-    max-width: 500px;
-    width: 100%;
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Weicher, moderner Schatten */
-    box-sizing: border-box;
+/* Inputs & Select */
+input[type="number"], select, textarea {
+    width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 1rem; box-sizing: border-box; transition: all 0.3s ease; background-color: #f8fafc;
 }
+input[type="number"]:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); background-color: #fff; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+.slider-labels { display: flex; justify-content: center; margin-top: 8px; font-size: 0.85rem; font-weight: 600;}
+.dynamic-text { text-align: center; width: 100%; transition: color 0.3s ease; }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
+/* 3. Sterne Rating (CSS Trick mit umgekehrter Flex-Direction) */
+.star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 5px; }
+.star-rating input { display: none; }
+.star-rating label { font-size: 2.5rem; color: #cbd5e1; cursor: pointer; transition: color 0.2s ease; }
+.star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #f59e0b; }
 
-header h1 {
-    margin: 0 0 10px 0;
-    font-size: 1.8rem;
-    font-weight: 700;
-}
+/* 8. Kacheln (Radio Buttons) */
+.tile-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tile { display: block; cursor: pointer; }
+.tile input { display: none; }
+.tile span { display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; transition: all 0.2s ease; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); height: 100%; box-sizing: border-box; }
+.tile input:checked + span { border-color: var(--accent); background-color: rgba(99, 102, 241, 0.1); color: var(--accent); font-weight: 700; }
 
-header p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
+/* 7. Entscheidung (Ja/Nein Buttons) */
+.decision-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.decision-btn { padding: 15px; font-size: 1rem; font-weight: bold; border-radius: 12px; background-color: #f8fafc; color: var(--text-muted); border: 2px solid #cbd5e1; transition: all 0.2s ease; }
+.decision-btn:hover { background-color: #f1f5f9; }
+.btn-yes.active { background-color: #10b981; border-color: #10b981; color: white; }
+.btn-no.active { background-color: #ef4444; border-color: #ef4444; color: white; }
 
-/* Formular-Elemente */
-.input-group {
-    margin-bottom: 25px;
-}
-
-label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 8px;
-    font-size: 0.95rem;
-}
-
-input[type="number"],
-textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-    background-color: #f8fafc;
-}
-
-input[type="number"]:focus,
-textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Moderner Leuchtring beim Anklicken */
-}
-
-/* Schieberegler (Slider) */
-input[type="range"] {
-    width: 100%;
-    accent-color: var(--accent); /* Moderne CSS-Funktion für Slider-Farben */
-    cursor: pointer;
-}
-
-.slider-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.slider-labels .highlight {
-    font-weight: 700;
-    color: var(--accent);
-}
-
-/* Button */
-button {
-    width: 100%;
-    background-color: var(--accent);
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.1s ease, background-color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-button:hover {
-    background-color: var(--accent-hover);
-}
-
-button:active {
-    transform: scale(0.98); /* Kleiner "Klick"-Effekt */
-}
-
-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-/* Hilfsklassen */
-.hidden {
-    display: none !important;
-}
-
-#success-msg {
-    text-align: center;
-    animation: fadeIn 0.5s ease;
-}
-
-#success-msg h2 {
-    color: #10b981; /* Erfolgs-Grün */
-}
-
-/* Kleine Animation für die Erfolgsmeldung */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* Submit Button */
+button[type="submit"] { width: 100%; background-color: var(--accent); color: white; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; padding: 14px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; }
+button[type="submit"]:hover { background-color: var(--accent-hover); }
+.hidden { display: none !important; }
+#success-msg { text-align: center; animation: fadeIn 0.5s ease; }
+#success-msg h2 { color: #10b981; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
