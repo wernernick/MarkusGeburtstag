@@ -1,5 +1,5 @@
 // --- SUPABASE SETUP ---
-const SUPABASE_URL = 'https://nkyfgiovrdklakzappgv.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://nkyfgiovrdklakzappgv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-LCrZ_Xi_KIiM8RWVEIbBQ_w8_mUBBt';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
