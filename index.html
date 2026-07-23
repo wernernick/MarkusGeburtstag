@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markus GV-Bewertungsportal</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; text-align: center; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { font-weight: bold; display: block; margin-bottom: 8px; }
+        input[type="number"], input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        input[type="range"] { width: 100%; }
+        button { background-color: #ff4757; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #ff6b81; }
+        #success-msg { display: none; color: green; margin-top: 20px; font-weight: bold; }
+    </style>
+    <!-- Supabase JS Library laden -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <h1>Qualitätskontrolle: Markus 🍆</h1>
+    <p>Deine Meinung ist uns wichtig! Bitte bewerte deine Erfahrung ehrlich und anonym.</p>
+
+    <form id="survey-form">
+        <div class="form-group">
+            <label for="laenge">Wie lang war er? (in cm, sei ehrlich!)</label>
+            <input type="number" id="laenge" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dauer">Wie fandest du es zeitlich?</label>
+            <input type="range" id="dauer" min="0" max="100" value="50">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: gray;">
+                <span>Viel zu kurz (Zwei Stöße)</span>
+                <span>Genau richtig</span>
+                <span>Viel zu lang (Mir wurde langweilig)</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="kommentar">Sonstiges Feedback / Raum für Verbesserungen:</label>
+            <input type="text" id="kommentar" placeholder="z.B. 'Hat beim Kuscheln danach geschnarcht'">
+        </div>
+
+        <button type="submit">Bewertung abschicken</button>
+    </form>
+
+    <div id="success-msg">Danke für deine ehrliche Bewertung! Das Dashboard wird aktualisiert...</div>
+
+    <script>
+        // HIER DEINE SUPABASE DATEN EINTRAGEN
+        const SUPABASE_URL = 'DEINE_SUPABASE_URL_HIER';
+        const SUPABASE_ANON_KEY = 'DEIN_ANON_KEY_HIER';
+
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        document.getElementById('survey-form').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Verhindert das Neuladen der Seite
+
+            const laenge = document.getElementById('laenge').value;
+            const dauer = document.getElementById('dauer').value;
+            const kommentar = document.getElementById('kommentar').value;
+
+            // Daten in Supabase schreiben
+            const { data, error } = await supabase
+                .from('markus_umfrage')
+                .insert([
+                    { laenge_cm: laenge, dauer_rating: dauer, kommentar: kommentar }
+                ]);
+
+            if (error) {
+                alert('Ups, da lief was schief! ' + error.message);
+                console.error(error);
+            } else {
+                // Formular verstecken und Erfolgsmeldung zeigen
+                document.getElementById('survey-form').style.display = 'none';
+                document.getElementById('success-msg').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
