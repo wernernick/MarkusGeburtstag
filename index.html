@@ -4,17 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qualitätskontrolle Markus</title>
-    
-    <!-- Moderne Schriftart laden -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- CSS verlinken -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Supabase laden -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- JavaScript verlinken (defer sorgt dafür, dass es erst nach dem HTML lädt) -->
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -26,6 +18,7 @@
         </header>
 
         <form id="survey-form">
+            <!-- Basis-Fragen -->
             <div class="input-group">
                 <label for="laenge">Wie lang war er? (in cm)</label>
                 <input type="number" id="laenge" placeholder="Bitte ehrliche Angaben..." required>
@@ -34,28 +27,83 @@
             <div class="input-group">
                 <label for="dauer">Wie fandest du es zeitlich?</label>
                 <input type="range" id="dauer" min="0" max="100" value="50">
-                
                 <div class="slider-labels">
-                    <span>2 Stöße</span>
-                    <span id="slider-value-text" class="highlight">Genau richtig</span>
-                    <span>Eingeschlafen</span>
+                    <span id="dauer-text" class="highlight dynamic-text">Genau richtig</span>
                 </div>
             </div>
 
+            <!-- 1. Akustik (Dropdown) -->
             <div class="input-group">
-                <label for="kommentar">Konstruktives Feedback:</label>
-                <textarea id="kommentar" rows="3" placeholder="z.B. 'Könnte beim Vorspiel weniger über Autos reden...'"></textarea>
+                <label for="akustik">Wie würdest du die Geräuschkulisse beschreiben?</label>
+                <select id="akustik" required>
+                    <option value="" disabled selected>Bitte wählen...</option>
+                    <option value="1">Mäuschen (Mucksäuschenstill)</option>
+                    <option value="2">Startender Traktor</option>
+                    <option value="3">Tarzan im Dschungel</option>
+                    <option value="4">Als würde jemand weinen</option>
+                </select>
+            </div>
+
+            <!-- 3. Fahrweise (Sterne) -->
+            <div class="input-group">
+                <label>Wenn die Performance ein Auto wäre, wie war die Fahrt?</label>
+                <div class="star-rating">
+                    <input type="radio" name="performance" id="star5" value="5"><label for="star5">★</label>
+                    <input type="radio" name="performance" id="star4" value="4"><label for="star4">★</label>
+                    <input type="radio" name="performance" id="star3" value="3"><label for="star3">★</label>
+                    <input type="radio" name="performance" id="star2" value="2"><label for="star2">★</label>
+                    <input type="radio" name="performance" id="star1" value="1"><label for="star1">★</label>
+                </div>
+                <div class="slider-labels">
+                    <span id="star-text" class="dynamic-text">Bitte bewerten...</span>
+                </div>
+            </div>
+
+            <!-- 5. Vorspiel/Kneten (Schieberegler) -->
+            <div class="input-group">
+                <label for="vorspiel">Wie war das Kneten beim Vorspiel?</label>
+                <input type="range" id="vorspiel" min="0" max="100" value="50">
+                <div class="slider-labels">
+                    <span id="vorspiel-text" class="highlight dynamic-text">Solide Technik</span>
+                </div>
+            </div>
+
+            <!-- 8. Nachgang (Kacheln) -->
+            <div class="input-group">
+                <label>Was passierte direkt danach?</label>
+                <div class="tile-group">
+                    <label class="tile"><input type="radio" name="nachgang" value="1"><span>Direkt eingeschlafen</span></label>
+                    <label class="tile"><input type="radio" name="nachgang" value="2"><span>Wollte High-Five</span></label>
+                    <label class="tile"><input type="radio" name="nachgang" value="3"><span>Handy gecheckt</span></label>
+                    <label class="tile"><input type="radio" name="nachgang" value="4"><span>"War ich gut?"</span></label>
+                </div>
+            </div>
+
+            <!-- 7. Weiterempfehlung (Große Buttons) -->
+            <div class="input-group">
+                <label>Würdest du Markus einer Freundin weiterempfehlen?</label>
+                <div class="decision-group">
+                    <button type="button" class="decision-btn btn-yes" data-value="1">Ja, gönnt euch!</button>
+                    <button type="button" class="decision-btn btn-no" data-value="0">Nein, lass mal.</button>
+                </div>
+                <!-- Verstecktes Feld für den Wert -->
+                <input type="hidden" id="empfehlung" required>
+            </div>
+
+            <div class="input-group">
+                <label for="kommentar">Konstruktives Feedback (optional):</label>
+                <textarea id="kommentar" rows="2" placeholder="Was lief gut, was nicht?"></textarea>
             </div>
 
             <button type="submit" id="submit-btn">
-                <span id="btn-text">Bewertung abschicken</span>
+                <span id="btn-text">Audit abschließen</span>
                 <span id="btn-spinner" class="hidden">Lädt...</span>
             </button>
         </form>
 
         <div id="success-msg" class="hidden">
             <h2>Vielen Dank! 🥳</h2>
-            <p>Deine Daten wurden anonym an das Dashboard übermittelt. Markus wird sich (vielleicht) über das Feedback freuen!</p>
+            <p>Die Daten sind sicher im Dashboard gelandet.</p>
         </div>
     </main>
 
