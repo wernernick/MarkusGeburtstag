@@ -1,54 +1,149 @@
-/* Grundlegende Einstellungen (bleiben gleich) */
+/* iOS / Apple Style Variables */
 :root {
-    --bg-color: #f8fafc;
+    --bg-color: #f5f5f7; /* Typisches Apple-Grau */
     --card-bg: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --accent: #6366f1;
-    --accent-hover: #4f46e5;
+    --text-main: #1d1d1f;
+    --text-muted: #86868b;
+    --accent: #0071e3; /* Apple Blue */
+    --accent-hover: #0077ed;
+    --radius: 24px;
 }
 
-body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-.card { background-color: var(--card-bg); max-width: 500px; width: 100%; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); box-sizing: border-box; }
-header { text-align: center; margin-bottom: 30px; }
-header h1 { margin: 0 0 10px 0; font-size: 1.8rem; font-weight: 700; }
-header p { margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
-.input-group { margin-bottom: 25px; }
-label { display: block; font-weight: 500; margin-bottom: 8px; font-size: 0.95rem; }
-
-/* Inputs & Select */
-input[type="number"], select, textarea {
-    width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 1rem; box-sizing: border-box; transition: all 0.3s ease; background-color: #f8fafc;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
 }
-input[type="number"]:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); background-color: #fff; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
-input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
-.slider-labels { display: flex; justify-content: center; margin-top: 8px; font-size: 0.85rem; font-weight: 600;}
-.dynamic-text { text-align: center; width: 100%; transition: color 0.3s ease; }
 
-/* 3. Sterne Rating (CSS Trick mit umgekehrter Flex-Direction) */
-.star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 5px; }
+.app-container {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 420px; /* Handy-Größe, sieht moderner aus */
+    min-height: 500px;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    padding: 40px 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: #e5e5ea;
+}
+.progress-bar {
+    height: 100%; width: 14%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+}
+
+/* Step Logic & Animations */
+.step {
+    display: none;
+    animation: slideIn 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    text-align: center;
+}
+.step.active { display: block; }
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.02em; }
+.subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
+.mt-large { margin-top: 40px; }
+
+/* 1. Cartoon & Zensurbalken (Der Gag) */
+.cartoon-container {
+    position: relative;
+    width: 200px; height: 280px;
+    margin: 0 auto 30px auto;
+    background: #f0f0f5; /* Hier später background-image: url('deinbild.jpg') */
+    border-radius: 16px;
+    border: 2px dashed #d2d2d7;
+    display: flex; justify-content: center; align-items: center;
+}
+.cartoon-placeholder span { color: #86868b; font-size: 0.8rem; padding: 10px; }
+
+.censor-wrapper {
+    position: absolute;
+    bottom: 80px; /* Position auf Schritt-Höhe anpassen! */
+    left: 50%;
+    transform: translateX(-50%);
+}
+.censor-bar {
+    height: 35px;
+    width: 60px; /* Startbreite */
+    background: #000000;
+    border-radius: 6px;
+    transition: width 0.1s; /* Schnelle Animation beim Ziehen */
+}
+
+/* Apple iOS Slider */
+.apple-slider {
+    -webkit-appearance: none; width: 100%; height: 8px; border-radius: 4px;
+    background: #e5e5ea; outline: none; margin-bottom: 15px;
+}
+.apple-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #ffffff; cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.dynamic-value { font-size: 1.1rem; font-weight: 600; margin-top: 10px; min-height: 26px; }
+
+/* Kacheln für Multiple Choice */
+.grid-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
+.option-card { display: block; cursor: pointer; }
+.option-card input { display: none; }
+.option-card span {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px 10px; background: #f5f5f7; border-radius: 16px;
+    font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease; border: 2px solid transparent;
+}
+.option-card input:checked + span {
+    background: #e8f2ff; border-color: var(--accent); color: var(--accent);
+}
+
+/* Sterne */
+.star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 5px; margin-bottom: 15px;}
 .star-rating input { display: none; }
-.star-rating label { font-size: 2.5rem; color: #cbd5e1; cursor: pointer; transition: color 0.2s ease; }
-.star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #f59e0b; }
+.star-rating label { font-size: 3rem; color: #e5e5ea; cursor: pointer; transition: 0.2s; }
+.star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #ffd60a; }
 
-/* 8. Kacheln (Radio Buttons) */
-.tile-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.tile { display: block; cursor: pointer; }
-.tile input { display: none; }
-.tile span { display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; transition: all 0.2s ease; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); height: 100%; box-sizing: border-box; }
-.tile input:checked + span { border-color: var(--accent); background-color: rgba(99, 102, 241, 0.1); color: var(--accent); font-weight: 700; }
+/* Große Buttons (Ja/Nein) */
+.decision-group { display: flex; gap: 15px; margin-bottom: 25px; }
+.decision-btn {
+    flex: 1; padding: 20px 10px; border-radius: 16px; border: none;
+    font-size: 1rem; font-weight: 600; cursor: pointer; background: #f5f5f7; transition: 0.2s;
+}
+.btn-yes.active { background: #34c759; color: white; }
+.btn-no.active { background: #ff3b30; color: white; }
 
-/* 7. Entscheidung (Ja/Nein Buttons) */
-.decision-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.decision-btn { padding: 15px; font-size: 1rem; font-weight: bold; border-radius: 12px; background-color: #f8fafc; color: var(--text-muted); border: 2px solid #cbd5e1; transition: all 0.2s ease; }
-.decision-btn:hover { background-color: #f1f5f9; }
-.btn-yes.active { background-color: #10b981; border-color: #10b981; color: white; }
-.btn-no.active { background-color: #ef4444; border-color: #ef4444; color: white; }
+/* Textarea */
+.comment-section { text-align: left; margin-bottom: 25px; }
+.comment-section label { font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; display: block;}
+textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #d2d2d7; background: #f5f5f7; font-family: inherit; box-sizing: border-box; resize: none;}
+textarea:focus { outline: none; border-color: var(--accent); background: white; }
 
-/* Submit Button */
-button[type="submit"] { width: 100%; background-color: var(--accent); color: white; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; padding: 14px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; }
-button[type="submit"]:hover { background-color: var(--accent-hover); }
+/* Haupt-Buttons (Weiter / Submit) */
+.next-btn, .submit-btn {
+    width: 100%; padding: 16px; border-radius: 14px; border: none;
+    background: var(--text-main); color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: transform 0.1s, background 0.2s; margin-top: 20px;
+}
+.submit-btn { background: var(--accent); }
+.next-btn:active, .submit-btn:active { transform: scale(0.97); }
+
 .hidden { display: none !important; }
-#success-msg { text-align: center; animation: fadeIn 0.5s ease; }
-#success-msg h2 { color: #10b981; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.success-icon { font-size: 4rem; margin-bottom: 15px; }
