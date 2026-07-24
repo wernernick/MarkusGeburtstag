@@ -1,14 +1,14 @@
-// 1. Supabase initialisieren
+
 const SUPABASE_URL = 'https://nkyfgiovrdklakzappgv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-LCrZ_Xi_KIiM8RWVEIbBQ_w8_mUBBt';
 
-// HIER GEÄNDERT: Wir nennen die Variable jetzt supabaseClient statt supabase!
+
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// 2. Warten, bis das HTML komplett geladen ist!
+
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- SLIDER LOGIK ---
+
     const laengeSlider = document.getElementById('laenge_cm');
     const laengeOutput = document.getElementById('laenge_output');
     
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- NAVIGATION (Weiter-Buttons) ---
+
     const nextButtons = document.querySelectorAll('.next-btn');
     
     nextButtons.forEach(btn => {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- SUPABASE SUBMIT ---
+
     const submitBtn = document.getElementById('submit-btn');
     
     if (submitBtn) {
