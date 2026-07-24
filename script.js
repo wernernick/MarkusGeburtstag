@@ -6,54 +6,49 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- STEP 1: Längen-Slider mit dynamischem Balken ---
+    // --- STEP 1: Längen-Slider mit EXPONENTIELLEM Balken ---
     const laengeSlider = document.getElementById('laenge_cm');
     const laengeOutput = document.getElementById('laenge_output');
     const dynamicBar = document.getElementById('dynamic_bar');
     
     if (laengeSlider && laengeOutput) {
         
-        // Funktion, um den Balken zu aktualisieren
         const updateBarWidth = (value) => {
             if (dynamicBar) {
-                const maxCm = 30; // Maximalwert deines Sliders
-                const maxProzent = 90; // Wie viel Prozent der Bildbreite der Balken maximal einnehmen darf
+                const maxCm = 30; 
                 
-                // Dreisatz: Aktueller Wert im Verhältnis zum Maximum
-                const prozentBreite = (value / maxCm) * maxProzent;
-                dynamicBar.style.width = `${prozentBreite}%`;
+                // Exponentielles Wachstum (Wert / Maximum) hoch 3
+                // Bei 15cm = wächst er kaum (12.5% der Maximalbreite)
+                // Bei 30cm = wächst er komplett (100% der Maximalbreite)
+                const exponent = Math.pow(value / maxCm, 3);
+                
+                // Berechne exakt, wie viele Pixel es vom Start des Balkens bis zum rechten Bildschirmrand sind
+                const balkenStart = dynamicBar.getBoundingClientRect().left;
+                const platzBisZumRand = window.innerWidth - balkenStart;
+                
+                // Neue Breite in Pixeln setzen
+                const neueBreite = exponent * platzBisZumRand;
+                
+                dynamicBar.style.width = `${neueBreite}px`;
             }
         };
 
-        // Direkt beim Laden der Seite einmal ausführen (für den Standardwert 15cm)
-        updateBarWidth(laengeSlider.value);
+        // Damit die Berechnung stimmt, müssen wir kurz warten, bis das Layout gerendert ist
+        setTimeout(() => {
+            updateBarWidth(laengeSlider.value);
+        }, 100);
 
-        // Wenn der User den Slider bewegt
         laengeSlider.addEventListener('input', (e) => {
             const currentVal = e.target.value;
             laengeOutput.textContent = currentVal;
             updateBarWidth(currentVal);
         });
-    }
-
-    // --- STEP 2: Ausdauer-Slider mit dynamischem Text ---
-    const dauerSlider = document.getElementById('dauer_slider');
-    const dauerFeedback = document.getElementById('dauer_feedback');
-    const dauerHidden = document.getElementById('dauer_rating');
-    
-    if (dauerSlider && dauerFeedback) {
-        const feedbackTexte = [
-            "1 - Vorbei bevor es anfing", "2 - Kurz & Knackig", "3 - Ausbaufähig", 
-            "4 - Guter Standard", "5 - Solide Mitte", "6 - Ordentlich", 
-            "7 - Sehr ausdauernd", "8 - Sportlich!", "9 - Marathon", "10 - Maschine"
-        ];
-        dauerSlider.addEventListener('input', (e) => {
-            const val = e.target.value;
-            dauerFeedback.textContent = feedbackTexte[val - 1];
-            dauerHidden.value = val;
+        
+        // Bonus: Wenn der User das Browser-Fenster (oder Handy) dreht, passt sich der Balken an
+        window.addEventListener('resize', () => {
+            updateBarWidth(laengeSlider.value);
         });
     }
-
     // --- STEP 3: Akustik (Große Buttons) ---
     const akustikBtns = document.querySelectorAll('#akustik_group .choice-btn');
     const akustikHidden = document.getElementById('akustik_id');
