@@ -1,15 +1,13 @@
 
+// 1. Supabase initialisieren
 const SUPABASE_URL = 'https://nkyfgiovrdklakzappgv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-LCrZ_Xi_KIiM8RWVEIbBQ_w8_mUBBt';
 
-// WICHTIG: Hier muss supabaseClient stehen!
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-
+// 2. Warten, bis das HTML komplett geladen ist!
 document.addEventListener('DOMContentLoaded', () => {
+// ... ab hier geht es normal weiter ...
     
 
     const laengeSlider = document.getElementById('laenge_cm');
