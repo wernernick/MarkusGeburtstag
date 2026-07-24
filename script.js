@@ -6,12 +6,33 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- STEP 1: Längen-Slider ---
+    // --- STEP 1: Längen-Slider mit dynamischem Balken ---
     const laengeSlider = document.getElementById('laenge_cm');
     const laengeOutput = document.getElementById('laenge_output');
+    const dynamicBar = document.getElementById('dynamic_bar');
+    
     if (laengeSlider && laengeOutput) {
+        
+        // Funktion, um den Balken zu aktualisieren
+        const updateBarWidth = (value) => {
+            if (dynamicBar) {
+                const maxCm = 30; // Maximalwert deines Sliders
+                const maxProzent = 90; // Wie viel Prozent der Bildbreite der Balken maximal einnehmen darf
+                
+                // Dreisatz: Aktueller Wert im Verhältnis zum Maximum
+                const prozentBreite = (value / maxCm) * maxProzent;
+                dynamicBar.style.width = `${prozentBreite}%`;
+            }
+        };
+
+        // Direkt beim Laden der Seite einmal ausführen (für den Standardwert 15cm)
+        updateBarWidth(laengeSlider.value);
+
+        // Wenn der User den Slider bewegt
         laengeSlider.addEventListener('input', (e) => {
-            laengeOutput.textContent = e.target.value;
+            const currentVal = e.target.value;
+            laengeOutput.textContent = currentVal;
+            updateBarWidth(currentVal);
         });
     }
 
