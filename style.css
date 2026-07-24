@@ -196,7 +196,7 @@ textarea { resize: vertical; min-height: 100px; }
     border-radius: 4px;
     
     /* --- HIER PASST DU SPÄTER DIE POSITION AN --- */
-    top: 70%;      /* Verschiebt den Balken nach oben/unten (z.B. 50% ist mittig) */
+    top: 90%;      /* Verschiebt den Balken nach oben/unten (z.B. 50% ist mittig) */
     left: 20%;      /* Verschiebt den Balken nach links/rechts */
     height: 24px;  /* Die Dicke des Balkens */
     /* --------------------------------------------- */
