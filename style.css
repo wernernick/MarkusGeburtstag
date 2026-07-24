@@ -197,9 +197,9 @@ textarea { resize: vertical; min-height: 100px; }
     
     /* --- ANGEPASSTE POSITION --- */
     top: 81%;      /* Zieht den Balken weiter nach unten */
-    left: 40%;     /* Schiebt den Startpunkt weiter in die Mitte */
+    left: 55%;     /* Schiebt den Startpunkt weiter in die Mitte */
     
-    height: 24px;  
+    height: 48px;  
     
     width: 0%; 
     transform: translateY(-50%); 
