@@ -3,68 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markus Performance Audit</title>
+    <title>Markus Fragebogen</title>
     <link rel="stylesheet" href="style.css">
     
     <!-- WICHTIG: Supabase CDN muss vor der script.js geladen werden -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=2" defer></script>
+    <script src="script.js?v=3" defer></script>
 </head>
 <body>
     <div class="glass-container">
-        <h1>Markus Audit 2026</h1>
+        <h1>Markus Fragebogen</h1>
         
         <!-- Step 1 -->
         <div id="step1" class="step">
             <h2>1. Dimensionen</h2>
             <p>Wie lautet das exakte Maß?</p>
             <input type="range" id="laenge_cm" min="1" max="30" value="15">
-            <p><span id="laenge_output">15</span> cm</p>
+            <p><span id="laenge_output" class="highlight-text">15</span> cm</p>
             <button class="next-btn" data-next="step2">Weiter</button>
         </div>
 
         <!-- Step 2 -->
         <div id="step2" class="step hidden">
             <h2>2. Ausdauer</h2>
-            <p>Bewerte die Dauer (1-10):</p>
-            <input type="number" id="dauer_rating" min="1" max="10" value="5">
+            <p>Bewerte die Dauer:</p>
+            <div class="slider-container">
+                <input type="range" id="dauer_slider" min="1" max="10" value="5" class="chunky-slider">
+                <div id="dauer_feedback" class="feedback-text">Solide Mitte (5)</div>
+                <!-- Verstecktes Feld für die Datenbank -->
+                <input type="hidden" id="dauer_rating" value="5">
+            </div>
             <button class="next-btn" data-next="step3">Weiter</button>
         </div>
 
         <!-- Step 3 -->
         <div id="step3" class="step hidden">
             <h2>3. Akustik</h2>
-            <p>Wähle ein Akustik-Level (1-5):</p>
-            <select id="akustik_id">
-                <option value="1">Mäuschen (1)</option>
-                <option value="3" selected>Normal (3)</option>
-                <option value="5">Presslufthammer (5)</option>
-            </select>
+            <p>Wähle die Geräuschkulisse:</p>
+            <div class="button-group" id="akustik_group">
+                <button class="choice-btn" data-value="1">🤫 Mäuschen</button>
+                <button class="choice-btn selected" data-value="3">🗣️ Normal</button>
+                <button class="choice-btn" data-value="5">📢 Pressluft</button>
+            </div>
+            <input type="hidden" id="akustik_id" value="3">
             <button class="next-btn" data-next="step4">Weiter</button>
         </div>
 
         <!-- Step 4 -->
         <div id="step4" class="step hidden">
             <h2>4. Performance</h2>
-            <p>Sterne-Rating (1-5):</p>
-            <input type="range" id="performance_sterne" min="1" max="5" value="3">
-            <p><span id="perf_output">3</span> Sterne</p>
+            <p>Vergib deine Sterne:</p>
+            <div class="star-rating" id="performance_stars">
+                <span class="star active" data-value="1">★</span>
+                <span class="star active" data-value="2">★</span>
+                <span class="star active" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <input type="hidden" id="performance_sterne" value="3">
             <button class="next-btn" data-next="step5">Weiter</button>
         </div>
 
         <!-- Step 5 -->
         <div id="step5" class="step hidden">
             <h2>5. Vorspiel</h2>
-            <p>Rating (1-10):</p>
-            <input type="number" id="vorspiel_rating" min="1" max="10" value="5">
+            <p>Wie heiß war es?</p>
+            <div class="flame-rating" id="vorspiel_flames">
+                <span class="flame active" data-value="1">🔥</span>
+                <span class="flame active" data-value="2">🔥</span>
+                <span class="flame active" data-value="3">🔥</span>
+                <span class="flame" data-value="4">🔥</span>
+                <span class="flame" data-value="5">🔥</span>
+            </div>
+            <input type="hidden" id="vorspiel_rating" value="3">
             <button class="next-btn" data-next="step6">Weiter</button>
         </div>
 
         <!-- Step 6 -->
         <div id="step6" class="step hidden">
-            <h2>6. Nachgang</h2>
-            <p>Level (1-5):</p>
-            <input type="number" id="nachgang_id" min="1" max="5" value="3">
+            <h2>6. Aftercare</h2>
+            <p>Kuschel- & Care-Faktor:</p>
+            <div class="pill-group" id="aftercare_group">
+                <div class="pill" data-value="1">Kalt</div>
+                <div class="pill" data-value="2">Naja</div>
+                <div class="pill selected" data-value="3">Gut</div>
+                <div class="pill" data-value="4">Sehr gut</div>
+                <div class="pill" data-value="5">Traumhaft</div>
+            </div>
+            <input type="hidden" id="nachgang_id" value="3">
             <button class="next-btn" data-next="step7">Weiter</button>
         </div>
 
