@@ -1,9 +1,11 @@
 // 1. Supabase initialisieren
 const SUPABASE_URL = 'https://nkyfgiovrdklakzappgv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-LCrZ_Xi_KIiM8RWVEIbBQ_w8_mUBBt';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// 2. Warten, bis das HTML komplett geladen ist! (Das fixt den Button- und Slider-Fehler)
+// HIER GEÄNDERT: Wir nennen die Variable jetzt supabaseClient statt supabase!
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// 2. Warten, bis das HTML komplett geladen ist!
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- SLIDER LOGIK ---
@@ -47,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (submitBtn) {
         submitBtn.addEventListener('click', async () => {
             
-            // Werte einsammeln und sicher als Integer parsen, falls etwas schiefgeht gibt es Fallback-Werte
             const daten = {
                 laenge_cm: parseInt(document.getElementById('laenge_cm').value) || 15,
                 dauer_rating: parseInt(document.getElementById('dauer_rating').value) || 5,
@@ -59,12 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 kommentar: document.getElementById('kommentar').value || ""
             };
 
-            // Button deaktivieren, damit man nicht doppelt klickt
             submitBtn.disabled = true;
             submitBtn.textContent = 'Speichere...';
 
-            // Ab in die Datenbank damit
-            const { data, error } = await supabase
+            // HIER GEÄNDERT: Wir nutzen jetzt den supabaseClient zum Senden
+            const { data, error } = await supabaseClient
                 .from('markus_umfrage')
                 .insert([daten]);
 
@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Nochmal versuchen';
             } else {
-                // Erfolgsmeldung anzeigen und Formular ausblenden
                 document.getElementById('step7').classList.add('hidden');
                 document.getElementById('success-msg').classList.remove('hidden');
             }
