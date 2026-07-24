@@ -4,26 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markus Fragebogen</title>
-    <link rel="stylesheet" href="style.css?=v2">
+    <link rel="stylesheet" href="style.css?v=4">
     
-    <!-- WICHTIG: Supabase CDN muss vor der script.js geladen werden -->
+    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=4" defer></script>
+    <script src="script.js?v=5" defer></script>
 </head>
 <body>
     <div class="glass-container">
-        <h1>Markus Fragebogen</h1>
         
-        <!-- Step 1 -->
-        <div id="step1" class="step">
+        <!-- STARTSEITE -->
+        <div id="step_start" class="step">
+            <h1>Markus Fragebogen</h1>
+            <div class="portrait-container">
+                <!-- HIER DEIN PORTRÄT FÜR DIE STARTSEITE EINTRAGEN -->
+                <img src="dein-portraet.jpg" alt="Markus" class="portrait-img">
+            </div>
+            <p>Willkommen zum offiziellen Audit. Bitte bewerte deine Erfahrung ehrlich und objektiv.</p>
+            <button class="next-btn" data-next="step1">Audit starten</button>
+        </div>
+
+        <!-- Step 1: Dimensionen -->
+        <div id="step1" class="step hidden">
             <h2>1. Dimensionen</h2>
             <p>Wie lautet das exakte Maß?</p>
             
-            <!-- NEU: Container für Bild und dynamischen Balken -->
             <div class="image-bar-container">
-                <!-- Platzhalter für dein Bild -->
-                <img src="markus.jpg" alt="Referenzbild" id="laenge_bild">
-                <!-- Der dynamische schwarze Balken -->
+                <!-- HIER DEIN KÖRPERBILD EINTRAGEN -->
+                <img src="dein-bild.jpg" alt="Referenzbild" id="laenge_bild">
                 <div id="dynamic_bar"></div>
             </div>
 
@@ -32,20 +40,19 @@
             <button class="next-btn" data-next="step2">Weiter</button>
         </div>
 
-        <!-- Step 2 -->
+        <!-- Step 2: Ausdauer -->
         <div id="step2" class="step hidden">
             <h2>2. Ausdauer</h2>
             <p>Bewerte die Dauer:</p>
             <div class="slider-container">
                 <input type="range" id="dauer_slider" min="1" max="10" value="5" class="chunky-slider">
                 <div id="dauer_feedback" class="feedback-text">Solide Mitte (5)</div>
-                <!-- Verstecktes Feld für die Datenbank -->
                 <input type="hidden" id="dauer_rating" value="5">
             </div>
             <button class="next-btn" data-next="step3">Weiter</button>
         </div>
 
-        <!-- Step 3 -->
+        <!-- Step 3: Akustik -->
         <div id="step3" class="step hidden">
             <h2>3. Akustik</h2>
             <p>Wähle die Geräuschkulisse:</p>
@@ -58,7 +65,7 @@
             <button class="next-btn" data-next="step4">Weiter</button>
         </div>
 
-        <!-- Step 4 -->
+        <!-- Step 4: Performance -->
         <div id="step4" class="step hidden">
             <h2>4. Performance</h2>
             <p>Vergib deine Sterne:</p>
@@ -73,7 +80,7 @@
             <button class="next-btn" data-next="step5">Weiter</button>
         </div>
 
-        <!-- Step 5 -->
+        <!-- Step 5: Vorspiel -->
         <div id="step5" class="step hidden">
             <h2>5. Vorspiel</h2>
             <p>Wie heiß war es?</p>
@@ -88,7 +95,7 @@
             <button class="next-btn" data-next="step6">Weiter</button>
         </div>
 
-        <!-- Step 6 -->
+        <!-- Step 6: Aftercare -->
         <div id="step6" class="step hidden">
             <h2>6. Aftercare</h2>
             <p>Kuschel- & Care-Faktor:</p>
@@ -103,26 +110,33 @@
             <button class="next-btn" data-next="step7">Weiter</button>
         </div>
 
-        <!-- Step 7 -->
+        <!-- Step 7: Fazit (NEUES DESIGN) -->
         <div id="step7" class="step hidden">
             <h2>7. Fazit</h2>
             <p>Würdest du Markus weiterempfehlen?</p>
-            <select id="empfehlung">
-                <option value="1">1 - Nein</option>
-                <option value="2">2 - Vielleicht</option>
-                <option value="3" selected>3 - Ja, absolut</option>
-            </select>
-            <br><br>
-            <textarea id="kommentar" placeholder="Abschließende Worte..."></textarea>
+            
+            <div class="button-group" id="empfehlung_group">
+                <button class="choice-btn" data-value="1">👎 Eher nicht</button>
+                <button class="choice-btn" data-value="2">🤔 Vielleicht</button>
+                <button class="choice-btn selected" data-value="3">🔥 Ja, absolut!</button>
+            </div>
+            <input type="hidden" id="empfehlung_id" value="3">
+            
+            <textarea id="kommentar" placeholder="Noch ein paar abschließende Worte... (optional)"></textarea>
             <br>
             <button id="submit-btn">Ergebnis abschicken</button>
         </div>
 
-        <!-- Success Message -->
+        <!-- ENDSEITE (Success Message) -->
         <div id="success-msg" class="step hidden">
+            <div class="portrait-container">
+                <!-- HIER KANN DAS GLEICHE ODER EIN ANDERES BILD REIN (z.B. Markus zwinkernd) -->
+                <img src="dein-portraet.jpg" alt="Markus freut sich" class="portrait-img">
+            </div>
             <h2>Danke!</h2>
-            <p>Das Audit für Markus wurde sicher verpackt und an die Datenbank übermittelt.</p>
+            <p>Dein Audit wurde sicher verschlüsselt und an die Datenbank übermittelt.</p>
         </div>
+        
     </div>
 </body>
 </html>
