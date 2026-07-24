@@ -2,6 +2,9 @@
 const SUPABASE_URL = 'https://nkyfgiovrdklakzappgv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-LCrZ_Xi_KIiM8RWVEIbBQ_w8_mUBBt';
 
+// WICHTIG: Hier muss supabaseClient stehen!
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
