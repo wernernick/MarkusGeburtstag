@@ -192,16 +192,16 @@ textarea { resize: vertical; min-height: 100px; }
 
 #dynamic_bar {
     position: absolute;
-    background-color: #1d1d1f; /* Edles Dunkelgrau/Schwarz im Apple-Style */
+    background-color: #1d1d1f; 
     border-radius: 4px;
     
-    /* --- HIER PASST DU SPÄTER DIE POSITION AN --- */
-    top: 80%;      /* Verschiebt den Balken nach oben/unten (z.B. 50% ist mittig) */
-    left: 20%;      /* Verschiebt den Balken nach links/rechts */
-    height: 24px;  /* Die Dicke des Balkens */
-    /* --------------------------------------------- */
+    /* --- ANGEPASSTE POSITION --- */
+    top: 81%;      /* Zieht den Balken weiter nach unten */
+    left: 40%;     /* Schiebt den Startpunkt weiter in die Mitte */
     
-    width: 0%; /* Startwert, wird von JavaScript überschrieben */
-    transform: translateY(-50%); /* Hilft bei der exakten vertikalen Zentrierung */
-    transition: width 0.1s ease-out; /* Macht die Längenänderung schön flüssig */
+    height: 24px;  
+    
+    width: 0%; 
+    transform: translateY(-50%); 
+    transition: width 0.1s ease-out; 
 }
