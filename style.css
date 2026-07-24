@@ -171,3 +171,37 @@ textarea { resize: vertical; min-height: 100px; }
 }
 .next-btn:hover, #submit-btn:hover { background-color: var(--accent-hover); transform: scale(1.02); }
 #submit-btn:disabled { background-color: #a0c4ff; cursor: not-allowed; transform: none; }
+
+/* --- Bild & Dynamischer Balken (Step 1) --- */
+.image-bar-container {
+    position: relative;
+    display: inline-block;
+    margin: 20px auto;
+    max-width: 100%; /* Verhindert, dass das Bild auf Handys zu groß wird */
+    border-radius: 12px;
+    overflow: hidden; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.image-bar-container img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background-color: #fff; /* Falls das Bild transparent ist */
+}
+
+#dynamic_bar {
+    position: absolute;
+    background-color: #1d1d1f; /* Edles Dunkelgrau/Schwarz im Apple-Style */
+    border-radius: 4px;
+    
+    /* --- HIER PASST DU SPÄTER DIE POSITION AN --- */
+    top: 50%;      /* Verschiebt den Balken nach oben/unten (z.B. 50% ist mittig) */
+    left: 5%;      /* Verschiebt den Balken nach links/rechts */
+    height: 24px;  /* Die Dicke des Balkens */
+    /* --------------------------------------------- */
+    
+    width: 0%; /* Startwert, wird von JavaScript überschrieben */
+    transform: translateY(-50%); /* Hilft bei der exakten vertikalen Zentrierung */
+    transition: width 0.1s ease-out; /* Macht die Längenänderung schön flüssig */
+}
