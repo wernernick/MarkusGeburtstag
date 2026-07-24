@@ -17,8 +17,10 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    
+    /* NEU: Verhindert seitliches Scrollen, wenn der Balken eskaliert */
+    overflow-x: hidden; 
 }
-
 .glass-container {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -177,12 +179,14 @@ textarea { resize: vertical; min-height: 100px; }
     position: relative;
     display: inline-block;
     margin: 20px auto;
-    max-width: 100%; /* Verhindert, dass das Bild auf Handys zu groß wird */
+    max-width: 100%;
     border-radius: 12px;
-    overflow: hidden; 
+    
+    /* WICHTIG: Das hier auf 'visible' ändern, damit der Balken raus darf! */
+    overflow: visible; 
+    
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
-
 .image-bar-container img {
     display: block;
     max-width: 100%;
